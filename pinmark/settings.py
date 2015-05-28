@@ -53,10 +53,17 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'pinmark.urls'
 
+# Frontend Template
+TEMPLATE_PATH = os.path.join(BASE_DIR, 'templates')
+
+TEMPLATE_DIRS = (
+    TEMPLATE_PATH,
+)
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': TEMPLATE_DIRS,
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -68,6 +75,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'pinmark.wsgi.application'
 
@@ -105,11 +113,4 @@ STATIC_PATH = os.path.join(BASE_DIR,'static')
 
 STATICFILES_DIRS = (
     STATIC_PATH,
-)
-
-# Frontend Template
-TEMPLATE_PATH = os.path.join(BASE_DIR, 'templates')
-
-TEMPLATE_DIRS = (
-    TEMPLATE_PATH,
 )

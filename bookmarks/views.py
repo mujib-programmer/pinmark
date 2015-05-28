@@ -1,20 +1,11 @@
-from django.http import HttpResponse
+from django.shortcuts import render
 
 def main_page(request):
-    output = '''
-    <html>
-        <head>
-            <title>%s</title>
-        </head>
-        <body>
-            <h1>%s</h1>
-            <p>%s</p>
-        </body>
-    </html>
-    ''' % (
-        'Django Bookmarks',
-        'Welcome to Django Bookmarks',
-        'Where you can store and share bookmarks!'
-    )
+    template = 'main_page.html'
+    variables = {
+        'head_title': 'Django Bookmarks',
+        'page_title': 'Welcome to Django Bookmarks',
+        'page_body': 'Where you can store and share bookmarks!'
+    }
 
-    return HttpResponse(output)
+    return render(request, template, variables)
