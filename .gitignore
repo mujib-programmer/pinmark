@@ -1,3 +1,6 @@
+# sqlite db
+pinmark.db.sqlite3
+
 # Pycharms IDE
 .idea/
 
