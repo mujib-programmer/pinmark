@@ -20,4 +20,5 @@ from bookmarks.views import *
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', main_page),
+    url(r'^user/(?P<username>\w+)/$', user_page),
 ]
