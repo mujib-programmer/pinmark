@@ -1,8 +1,9 @@
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.template import Context
 from django.template.loader import get_template
+from django.contrib.auth import logout
 
 def main_page(request):
     template = 'main_page.html'
@@ -32,3 +33,7 @@ def user_page(request, username):
     output = template.render(variables)
 
     return HttpResponse(output)
+
+def logout_page(request):
+    logout(request)
+    return HttpResponseRedirect('/')

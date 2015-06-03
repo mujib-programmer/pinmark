@@ -21,4 +21,6 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', main_page),
     url(r'^user/(?P<username>\w+)/$', user_page),
+    url(r'^login/$', 'django.contrib.auth.views.login'),
+    url(r'^logout/$', logout_page),
 ]
