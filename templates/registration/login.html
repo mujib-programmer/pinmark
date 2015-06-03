@@ -1,24 +1,24 @@
-<html>
-    <head>
-        <title>Pinmark - User Login</title>
-    </head>
-    <body>
-        <h1>User Login</h1>
+{% extends "base.html" %}
 
-        {% if form.has_errors %}
+{% load staticfiles %}
+
+{% block title %}User Login{% endblock %}
+
+{% block head %}User Login{% endblock %}
+
+{% block content %}
+    {% if form.has_errors %}
         <p>Your username and password didn't match.
         Please try again.</p>
-        {% endif %}
+    {% endif %}
 
-        <form method="post" action=".">
-            {% csrf_token %}
-            <p><label for="id_username">Username:</label>
-            {{ form.username }}</p>
-            <p><label for="id_password">Password:</label>
-            {{ form.password }}</p>
-            <input type="hidden" name="next" value="/" />
-            <input type="submit" value="login" />
-        </form>
-
-    </body>
-</html>
+    <form method="post" action=".">
+        {% csrf_token %}
+        <p><label for="id_username">Username:</label>
+        {{ form.username }}</p>
+        <p><label for="id_password">Password:</label>
+        {{ form.password }}</p>
+        <input type="hidden" name="next" value="/" />
+        <input type="submit" value="login" />
+     </form>
+{% endblock %}

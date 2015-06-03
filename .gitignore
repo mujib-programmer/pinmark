@@ -1,3 +1,6 @@
+# django bookmarks apps migrations
+bookmarks/migrations/
+
 # sqlite db
 pinmark.db.sqlite3
 
