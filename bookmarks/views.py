@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.template import Context
 from django.template.loader import get_template
 from django.contrib.auth import logout
+from bookmarks.forms import *
 
 def main_page(request):
     template = 'main_page.html'
@@ -37,3 +38,23 @@ def user_page(request, username):
 def logout_page(request):
     logout(request)
     return HttpResponseRedirect('/')
+
+def register_page(request):
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+
+        if form.is_valid():
+            user = User.objects.create_user(
+                username=form.cleaned_data['username'],
+                password=form.cleaned_data['password1'],
+                email=form.cleaned_data['email']
+            )
+
+            return render(request, 'registration/register_success.html')
+
+    else:
+        form = RegistrationForm()
+
+    variables = { 'form': form }
+
+    return render(request, 'registration/register.html', variables)

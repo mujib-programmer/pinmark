@@ -2,3 +2,8 @@
 #nav {
     float: right;
 }
+
+/* forms */
+input {
+    display: block;
+}
