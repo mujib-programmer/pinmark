@@ -19,10 +19,17 @@ from bookmarks.views import *
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+
+    # Browsing
     url(r'^$', main_page),
     url(r'^user/(?P<username>\w+)/$', user_page),
+
+    # Session management
     url(r'^login/$', 'django.contrib.auth.views.login'),
     url(r'^logout/$', logout_page),
     url(r'^register/$', register_page),
+
+    # Account management
+    url(r'^save/$', bookmark_save_page),
 
 ]
