@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^$', main_page),
     url(r'^user/(?P<username>\w+)/$', user_page), # allow only alphanumeric character
     url(r'^tag/(?P<tag_name>\S+)/$', tag_page),   # any non-whitespace character is allowed
+    url(r'^tag/$', tag_cloud_page),
 
     # Session management
     url(r'^login/$', 'django.contrib.auth.views.login'),
