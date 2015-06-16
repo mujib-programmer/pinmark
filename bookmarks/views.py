@@ -58,13 +58,27 @@ def register_page(request):
 
 @login_required
 def bookmark_save_page(request):
+    ajax = request.GET.has_key('ajax')
     if request.method == 'POST':
         form = BookmarkSaveForm(request.POST)
 
         if form.is_valid():
             bookmark = _bookmark_save(request, form)
 
-            return HttpResponseRedirect('/user/%s/' % request.user.username)
+            if ajax:
+                variables = {
+                    'bookmarks': [bookmark],
+                    'show_edit': True,
+                    'show_tags': True
+                }
+
+                return render(request, 'bookmark_list.html', variables)
+
+            else:
+                return HttpResponseRedirect('/user/%s/' % request.user.username)
+        else:
+            if ajax:
+                return HttpResponse('failure')
 
     elif request.GET.has_key('url'):
         url = request.GET['url']
@@ -95,7 +109,11 @@ def bookmark_save_page(request):
 
     variables = {'form': form}
 
-    return render(request, 'bookmark_save.html', variables)
+    if ajax:
+        return render(request, 'bookmark_save_form.html', variables)
+    else:
+        return render(request, 'bookmark_save.html', variables)
+
 
 def tag_page(request, tag_name):
     tag = get_object_or_404(Tag, name=tag_name)

@@ -9,3 +9,8 @@
 {% block content %}
     {% include "bookmark_list.html" %}
 {% endblock %}
+
+{% block javascript %}
+   {{ block.super }}
+   <script type="text/javascript" src="{% static 'js/bookmark_edit.js' %}"></script>
+{% endblock %}
