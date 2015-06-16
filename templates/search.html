@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 {% block title %}Search Bookmarks{% endblock %}
 {% block head %}Search Bookmarks{% endblock %}
 {% block content %}
@@ -12,4 +13,9 @@
         {% include 'bookmark_list.html' %}
     {% endif %}
 </div>
+{% endblock %}
+
+{% block javascript %}
+   {{ block.super }}
+   <script type="text/javascript" src="{% static 'js/search.js' %}"></script>
 {% endblock %}
