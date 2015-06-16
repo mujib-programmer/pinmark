@@ -27,6 +27,9 @@ urlpatterns = [
     url(r'^tag/$', tag_cloud_page),
     url(r'^search/$', search_page),
 
+    # Ajax
+    url(r'^ajax/tag/autocomplete/$', ajax_tag_autocomplete),
+
     # Session management
     url(r'^login/$', 'django.contrib.auth.views.login'),
     url(r'^logout/$', logout_page),

@@ -4,7 +4,9 @@
     <head>
         <title>Django Bookmarks |
         {% block title %}{% endblock %}</title>
-        <link rel="stylesheet"  type="text/css" href="{% static 'css/style.css' %}" />
+        {% block css %}
+            <link rel="stylesheet"  type="text/css" href="{% static 'css/style.css' %}" />
+        {% endblock %}
     </head>
     <body>
         <div id="nav">

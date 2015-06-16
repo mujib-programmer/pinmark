@@ -1,9 +1,22 @@
 {% extends "base.html" %}
 
+{% load staticfiles %}
+
 {% block title %}Save Bookmark{% endblock %}
 
 {% block head %}Save Bookmark{% endblock %}
 
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'vendor/jquery-autocomplete/jquery.autocomplete.css' %}" type="text/css" />
+{% endblock %}
+
 {% block content %}
     {% include 'bookmark_save_form.html' %}
+{% endblock %}
+
+{% block javascript %}
+    <script type="text/javascript" src="{% static 'vendor/jquery-autocomplete/lib/jquery.js' %}"> </script>
+    <script type="text/javascript" src="{% static 'vendor/jquery-autocomplete/jquery.autocomplete.js' %}"> </script>
+    <script type="text/javascript" src="{% static 'js/tag_autocomplete.js' %}"> </script>
 {% endblock %}
