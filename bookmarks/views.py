@@ -10,14 +10,16 @@ from bookmarks.forms import *
 from bookmarks.models import *
 
 def main_page(request):
-    template = 'main_page.html'
+    shared_bookmarks = SharedBookmark.objects.order_by('-date')[:10]
+
     variables = {
+        'shared_bookmarks': shared_bookmarks,
         'head_title': 'Django Bookmarks',
         'page_title': 'Welcome to Django Bookmarks',
         'page_body': 'Where you can store and share bookmarks!'
     }
 
-    return render(request, template, variables)
+    return render(request, 'main_page.html', variables)
 
 def user_page(request, username):
     user = get_object_or_404(User, username=username)
@@ -211,6 +213,16 @@ def _bookmark_save(request, form):
         tag, dummy = Tag.objects.get_or_create(name=tag_name)
         bookmark.tag_set.add(tag)
 
+    # Share on the main page if requested.
+    if form.cleaned_data['share']:
+        shared_bookmark, created = SharedBookmark.objects.get_or_create(
+            bookmark=bookmark
+        )
+
+        if created:
+            shared_bookmark.users_voted.add(request.user)
+            shared_bookmark.save()
+
     # Save bookmark to database and return it.
     bookmark.save()
 
@@ -223,3 +235,26 @@ def ajax_tag_autocomplete(request):
         return HttpResponse('\n'.join(tag.name for tag in tags))
 
     return HttpResponse()
+
+@login_required
+def bookmark_vote_page(request):
+    if request.GET.has_key('id'):
+        try:
+            id = request.GET['id']
+            shared_bookmark = SharedBookmark.objects.get(id=id)
+            user_voted = shared_bookmark.users_voted.filter(
+                username=request.user.username
+            )
+
+            if not user_voted:
+                shared_bookmark.votes += 1
+                shared_bookmark.users_voted.add(request.user)
+                shared_bookmark.save()
+
+        except ObjectDoesNotExist:
+            raise Http404('Bookmark not found.')
+
+    if request.META.has_key('HTTP_REFERER'):
+        return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+    return HttpResponseRedirect('/')
